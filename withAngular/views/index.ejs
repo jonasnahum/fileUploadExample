@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="angular/lib/angular.js"></script>
+    <script src="angular/lib/angular-route.js"></script>
+    <script src="angular/lib/ng-file-upload-shim.js"></script>
+    <script src="angular/lib/ng-file-upload.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+    <div ng-view>
+    
+    </div>
+    <body ng-app="fileUpload" ng-controller="MyCtrl">
+      <h4>Upload on file select</h4>
+      <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+              accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+          Select File</button>
+      <br><br>
+      File:
+      <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+          <span class="progress" ng-show="f.progress >= 0">
+              <div style="width:{{f.progress}}%"  
+                   ng-bind="f.progress + '%'"></div>
+          </span>
+      </div>     
+      {{errorMsg}}
+            <script src="angular/src/app.js"></script>
+            <script src="angular/src/vista1Controller.js"></script>
+      </body>
+</html>
