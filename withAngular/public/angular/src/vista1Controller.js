@@ -2,26 +2,32 @@
    //inject angular file upload directives and services.
     var app = angular.module('fileUpload');
 
-    app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
-        $scope.uploadFiles = function(file, errFiles) {
-            $scope.f = file;
-            $scope.errFile = errFiles && errFiles[0];
-            if (file) {
-                file.upload = Upload.upload({
-                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+    app.controller('MyCtrl', ['Upload', '$timeout', function (Upload, $timeout) {
+        var ctrl = this;
+        
+        ctrl.f = undefined;
+        ctrl.errFile = undefined;
+        ctrl.errorMsg = undefined;
+        
+        ctrl.uploadFiles = function(file, errFiles) {
+            ctrl.f = file;
+            ctrl.errFile = errFiles && errFiles[0];
+            if (ctrl.f) {
+                ctrl.f.upload = Upload.upload({
+                    url: '/',
                     data: {file: file}
                 });
 
-                file.upload.then(function (response) {
+                ctrl.f.upload.then(function (response) {
                     alert("archivo cargado satisfactoriamente");
                     $timeout(function () {
-                        file.result = response.data;
+                        ctrl.f.result = response.data;
                     });
                 }, function (response) {
                     if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
+                        ctrl.errorMsg = response.status + ': ' + response.data;
                 }, function (evt) {
-                    file.progress = Math.min(100, parseInt(100.0 * 
+                    ctrl.f.progress = Math.min(100, parseInt(100.0 * 
                                              evt.loaded / evt.total));
                 });
             }   
